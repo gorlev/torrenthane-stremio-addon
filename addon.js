@@ -4,7 +4,7 @@ const torrenthaneScraper = require("./scraper")
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 const manifest = {
 	"id": "community.TorrentHane",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"catalogs": [],
 	"resources": [
 		"stream"
@@ -14,7 +14,7 @@ const manifest = {
 		"series"
 	],
 	"name": "TorrentHane",
-	"description": "TorrentHane Addon provides Turkish and International movie/series torrent streams from torrenthane.net in SD, HD, FHD or 4K.",
+	"description": "TorrentHane Addon provides Turkish and International movie/series torrent streams from torrenthane.net with SD, HD, FHD or 4K options.",
 	"logo": "https://torrenthane.net/wp-content/uploads/torrenthaneicon.png",
 	"idPrefixes": [
 		"tt"

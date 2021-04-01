@@ -1,6 +1,6 @@
 {
 	"name": "stremio-addon-torrenthane",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "torrenthane description",
 	"scripts": {
 		"start": "node server.js"
