@@ -18,11 +18,11 @@ async function torrenthaneScraper(imdbId,type,season,episode) {
         const IMDBdata = await responseFromIMDB.json();
         const imdbName = await IMDBdata.d[0]["l"];
         //const IMDByear = await IMDBdata.d[0]["y"];
-        console.log(imdbName)
+        //console.log(imdbName)
 
         //EDITS THE NAME FOR SEARCHING ON TORRENTHANE.NET
         const editedName = imdbName.toLowerCase().replaceAll(" ", "-").replaceAll("'","").replaceAll(":","")
-        console.log(editedName)
+        //console.log(editedName)
 
         let elements = []
         let elementsLast = []
@@ -52,7 +52,7 @@ async function torrenthaneScraper(imdbId,type,season,episode) {
                 }
         }).get()
 
-        console.log(elements)
+        //console.log(elements)
 
         //FINDING THE INFOHASH AND THE OTHER NECESSARY PARAMETERS
         for(let i = 0; i < elements.length; i++) {
@@ -82,7 +82,7 @@ async function torrenthaneScraper(imdbId,type,season,episode) {
             }
         }
 
-        console.log(stremioElements)
+        //console.log(stremioElements)
 
         return stremioElements;
 
