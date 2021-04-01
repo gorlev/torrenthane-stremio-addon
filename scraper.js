@@ -21,7 +21,16 @@ async function torrenthaneScraper(imdbId,type,season,episode) {
         //console.log(imdbName)
 
         //EDITS THE NAME FOR SEARCHING ON TORRENTHANE.NET
-        const editedName = imdbName.toLowerCase().replaceAll(" ", "-").replaceAll("'","").replaceAll(":","")
+        let chars = {'ı':'i',
+                    'ö':'o', 
+                    'ü':'u', 
+                    'ç':'c', 
+                    'ş':'s', 
+                    'ğ':'g', 
+                    ' ':'-', 
+                    '\'':'',
+                    ':':''};
+        let editedName = imdbName.toLowerCase().replace(/[ıöüçşğ:' ]/g, m => chars[m]); 
         //console.log(editedName)
 
         let elements = []
