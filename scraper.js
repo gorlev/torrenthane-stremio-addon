@@ -1,9 +1,9 @@
-const parseTorrent = require('parse-torrent');
-const axios = require('axios').default;
+// const parseTorrent = require('parse-torrent');
+// const axios = require('axios').default;
 //const torrentToMagnet = require('torrent-to-magnet');
 const fetch = require("node-fetch");
 const cheerio = require('cheerio');
-const {linkToInfoHash} = require('./linkToInfoHash')
+const linkToInfoHash = require('./linkToInfoHash')
 
 async function torrenthaneScraper(imdbId,type,season,episode) {
     try {
@@ -38,13 +38,16 @@ async function torrenthaneScraper(imdbId,type,season,episode) {
         let stremioElements =[]
 
         //SEARCHS IT ON TORRENTHANE.NET
-        let pageHtml = await axios.get(`https://torrenthane.net/${editedName}`).catch(function (error) {
-            if (error.response.status === 404) {
-              console.log("There is no torrent in that name in this website.");
-            }});
-        
-        $ = cheerio.load(pageHtml.data);
+        const pageHtmlResponse = await fetch(`https://torrenthane.net/${editedName}`)
+        const pageHtml = await pageHtmlResponse.text()
 
+        if(pageHtmlResponse.status === 404) {
+            return stremioElements = []
+        }
+    
+        $ = cheerio.load(pageHtml);
+
+    
         //SCRAPES THE DATA
         $('.filmicerik > p > strong').each((i, section) => {
             let torrentUrl = $(section).children('a').attr('href');
@@ -61,14 +64,14 @@ async function torrenthaneScraper(imdbId,type,season,episode) {
                 }
         }).get()
 
-        //console.log(elements)
+        // console.log(elements)
 
         //FINDING THE INFOHASH AND THE OTHER NECESSARY PARAMETERS
         for(let i = 0; i < elements.length; i++) {
             let infohash = await linkToInfoHash(encodeURI(elements[i].torrentUrl))
             elementsLast.push({infoHash: infohash, info:elements[i]})
         }
-        //console.log(elementsLast)
+        // console.log(elementsLast)
 
         //USE THEM AND SEND THEM TO STREMIO
         for(i = 0; i < elements.length; i++){
@@ -100,12 +103,5 @@ async function torrenthaneScraper(imdbId,type,season,episode) {
         console.log(e)
     }
 }
-//torrenthaneScraper("tt7126948","movie") // wonder woman 1984
-//torrenthaneScraper("tt10919380","movie") // freaky
-//torrenthaneScraper("tt7767422","series",2,1) // sex education
-//torrenthaneScraper("tt7671598","series",1,2) //messiah
-
-//torrenthaneScraper("tt4225622","movie") //the baby sitter
-
 
 module.exports= torrenthaneScraper
